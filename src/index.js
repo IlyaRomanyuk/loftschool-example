@@ -29,29 +29,28 @@ console.log(result);
  Пример:
    sumWithDefaults(10, 20) вернет 30
    sumWithDefaults(2, 4) вернет 6
+   */
 
- 2.1 *: Значение по умолчанию для второго аргумента должно быть равно 100
+   function sumWithDefaults(a, b) {
+
+    if(b === undefined){
+      b = 100;
+    }
+
+    let result = a + b;
+    return result
+  }
+
+  let res = sumWithDefaults(15, 28);
+  let res2 = sumWithDefaults(15);
+  console.log(res);
+  console.log(res2);
+   
+ /*2.1 *: Значение по умолчанию для второго аргумента должно быть равно 100
 
  Пример:
    sumWithDefaults(10) вернет 110
  */
-function sumWithDefaults(a, b) {
-    let result = a + b;
-    return result
-}
-
-let result = sumWithDefaults(15, 28);
-console.log(result)
-/* 2.1* */ 
-
-function sumWithDefaults(a){
-  let b = 100;
-  let result = a + b;
-  return result
-}
-
-let result = sumWithDefaults(1);
-console.log(result)
 
 /*
  Задание 3:
@@ -61,6 +60,7 @@ console.log(result)
  Пример:
    returnFnResult(() => 'привет') вернет 'привет'
  */
+
 function returnFnResult(fn) {
     return fn();
 }
@@ -85,13 +85,18 @@ console.log(returnFnResult(fn));
    console.log(f()); // выведет 12
    console.log(f()); // выведет 13
  */
+
 function returnCounter(number) {
   return function(){
-    return number = number + 1;
+    if(number === undefined){
+      number = 0
+    }
+      number = number + 1;
+      return number;
   }
 }
 
-let myFunc =  returnCounter(10);
+let myFunc = returnCounter();
 console.log(myFunc());
 console.log(myFunc());
 console.log(myFunc());
@@ -105,16 +110,17 @@ console.log(myFunc());
  Пример:
    returnArgumentsArray(1, 2, 3) вернет [1, 2, 3]
  */
+
 function returnArgumentsArray() {
   let arr = [];
     for(let i = 0; i < arguments.length; i++){
         arr[i] = arguments[i];
     }
 
-    console.log(arr)
+    return arr;
 }
 
-returnArgumentsArray(1, 2, 3)
+console.log(returnArgumentsArray(1, 2, 3));
 
 /*
  Задание 6 *:
@@ -131,25 +137,25 @@ returnArgumentsArray(1, 2, 3)
 
    console.log(newSum()) выведет 6
  */
-function bindFunction(fn) {
-  let arr = [];
 
+
+function bindFunction(func2){
+    let arr = [];
     for(let i = 1; i < arguments.length; i++){
         arr.push(arguments[i]);
     }
-    console.log(arr);
-    return fn(...arr);
+    return func2.bind(null, ...arr);
 }
 
 function sum() {
-  let result = 0;
-  for(let i = 0; i < arguments.length; i++){
-      result = result + arguments[i];
-  };
-  return result;
+    let result = 0;
+    for(let i = 0; i < arguments.length; i++){
+        result = result + arguments[i];
+    };
+    return result;
 }
 
-console.log(bindFunction(sum, 5, 8, 9));
+console.log(bindFunction(sum, 5, 8, 9)());
 
 export {
     returnFirstArgument,
