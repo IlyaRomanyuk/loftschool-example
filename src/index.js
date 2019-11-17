@@ -55,29 +55,26 @@ console.log(map(array, fn));*/
  Посмотрите как работает reduce и повторите это поведение для массива, который будет передан в параметре array
  */
 
-function reduce(array, fn, initial) {
-  let result = 0;
+/*function reduce(array, fn, initial) {
+
   for(let i=0; i<array.length; i++){
-    if(i > 2){
-      break
+    if(initial === undefined){
+      initial = array[i];
+      continue;
     }
-    if(i == 0){
-      result = result + fn(array[i], array[i+1]);
-    }else{
-      result = result + fn(result, array[i+1]);
-    }
+    initial = fn(initial, array[i], i, array);
   }
-  return result;
+  return initial;
 }
 
 let array = [1, 2, 3, 4];
 
-function fn(result, element){
+function fn(result, element, index, arr){
   let sum = result + element;
   return sum;
 }
 
-console.log(reduce(array, fn, 10))
+console.log(reduce(array, fn, 10))*/
 
 /*
  Задание 4:
@@ -88,7 +85,13 @@ console.log(reduce(array, fn, 10))
    upperProps({ name: 'Сергей', lastName: 'Петров' }) вернет ['NAME', 'LASTNAME']
  */
 function upperProps(obj) {
+  let array = [];
+  for(let key in obj){
+      array.push(key.toUpperCase());
+  }
+  return array;
 }
+console.log(upperProps({ name: 'Сергей', lastName: 'Петров' }))
 
 /*
  Задание 5 *:
