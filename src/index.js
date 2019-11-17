@@ -13,8 +13,7 @@
  Другими словами: функция должна возвращать в неизменном виде то, что поступает ей на вход
  */
 function returnFirstArgument(a) {
-    let result = a;
-    return result;
+    return a;
 }
 
 let result = returnFirstArgument(10);
@@ -31,11 +30,7 @@ console.log(result);
    sumWithDefaults(2, 4) вернет 6
    */
 
-   function sumWithDefaults(a, b) {
-
-    if(b === undefined){
-      b = 100;
-    }
+   function sumWithDefaults(a, b = 100) {
 
     let result = a + b;
     return result
@@ -86,12 +81,10 @@ console.log(returnFnResult(fn));
    console.log(f()); // выведет 13
  */
 
-function returnCounter(number) {
+function returnCounter(number = 0) {
   return function(){
-    if(number === undefined){
-      number = 0
-    }
-      number = number + 1;
+
+      number++;
       return number;
   }
 }
@@ -112,12 +105,12 @@ console.log(myFunc());
  */
 
 function returnArgumentsArray() {
-  let arr = [];
+  /*let arr = [];
     for(let i = 0; i < arguments.length; i++){
         arr[i] = arguments[i];
-    }
+    }*/
 
-    return arr;
+    return [...arguments];
 }
 
 console.log(returnArgumentsArray(1, 2, 3));
@@ -139,12 +132,12 @@ console.log(returnArgumentsArray(1, 2, 3));
  */
 
 
-function bindFunction(func2){
-    let arr = [];
+function bindFunction(func2, ...rest){
+    /*let arr = [];
     for(let i = 1; i < arguments.length; i++){
         arr.push(arguments[i]);
-    }
-    return func2.bind(null, ...arr);
+    }*/
+    return func2.bind(null, ...rest);
 }
 
 function sum() {
@@ -152,6 +145,7 @@ function sum() {
     for(let i = 0; i < arguments.length; i++){
         result = result + arguments[i];
     };
+
     return result;
 }
 
