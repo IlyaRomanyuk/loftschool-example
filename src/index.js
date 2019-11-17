@@ -6,9 +6,23 @@
  Напишите аналог встроенного метода forEach для работы с массивами
  Посмотрите как работает forEach и повторите это поведение для массива, который будет передан в параметре array
  */
-function forEach(array, fn) {
-  
+/*function forEach(array, fn) {
+  for(let i = 0; i < array.length; i++){
+      fn(array[i], i, array);
+  }
 }
+
+let array = [77, 56, 23, 44];
+let result = 0;
+function fn(item, index){
+  result = result + item;
+  console.log(`Index: ${index} Number: ${item}`);
+  if(index === array.length - 1){
+      console.log(result);
+  }
+}
+
+forEach(array, fn);*/
 
 /*
  Задание 2:
@@ -16,17 +30,54 @@ function forEach(array, fn) {
  Напишите аналог встроенного метода map для работы с массивами
  Посмотрите как работает map и повторите это поведение для массива, который будет передан в параметре array
  */
-function map(array, fn) {
+/*function map(array, fn) {
+  let newArray = [];
+  for(let i = 0; i<array.length; i++){
+    newArray[i] = array[i];
+  }
+  for(let i = 0; i<array.length; i++){
+      newArray[i] = fn(array[i], i, array)
+  }
+  return newArray;
 }
 
+let array = [1, 2, 3, 4]
+function fn(item, index, array){
+let result = item * item;
+return result;
+}
+
+console.log(map(array, fn));*/
 /*
  Задание 3:
 
  Напишите аналог встроенного метода reduce для работы с массивами
  Посмотрите как работает reduce и повторите это поведение для массива, который будет передан в параметре array
  */
+
 function reduce(array, fn, initial) {
+  let result = 0;
+  for(let i=0; i<array.length; i++){
+    if(i > 2){
+      break
+    }
+    if(i == 0){
+      result = result + fn(array[i], array[i+1]);
+    }else{
+      result = result + fn(result, array[i+1]);
+    }
+  }
+  return result;
 }
+
+let array = [1, 2, 3, 4];
+
+function fn(result, element){
+  let sum = result + element;
+  return sum;
+}
+
+console.log(reduce(array, fn, 10))
 
 /*
  Задание 4:
