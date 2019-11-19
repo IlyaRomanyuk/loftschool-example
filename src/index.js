@@ -16,8 +16,43 @@
    isAllTrue([1, 2, 3, 4, 5], n => n < 10) // вернет true
    isAllTrue([100, 2, 3, 4, 5], n => n < 10) // вернет false
  */
-function isAllTrue(array, fn) {
+function isAllTrue(array, fn){
+  
+  if(array.length == 0 || Object.prototype.toString.call(array) !== '[object Array]'){
+    throw new Error("empty array");
+  } else if(Object.prototype.toString.call(fn) !== '[object Function]'){
+    throw new Error("fn is not a function");
+  } 
+
+  let currentLength = 0;
+    for(let i = 0; i < array.length; i++){
+        if(fn(array[i]) == true){
+            currentLength++;
+        }
+    }
+
+    if(array.length == currentLength){
+        return true
+    } else{
+        return false
+    } 
+} 
+
+function fn(element){
+    if(element < 10){
+        return true
+    } else {
+        return false
+    }
 }
+
+let array = [1, 2, 3, 4, 5];
+try{
+  console.log(isAllTrue(array, fn));
+} catch(e){
+  console.log(e.message);
+}
+
 
 /*
  Задание 2:
@@ -35,7 +70,41 @@ function isAllTrue(array, fn) {
    isSomeTrue([1, 2, 30, 4, 5], n => n > 20) // вернет true
    isSomeTrue([1, 2, 3, 4, 5], n => n > 20) // вернет false
  */
-function isSomeTrue(array, fn) {
+function isSomeTrue(array, fn){
+  if(array.length == 0 || Object.prototype.toString.call(array) !== '[object Array]'){
+    throw new Error("empty array");
+  } else if(Object.prototype.toString.call(fn) !== '[object Function]'){
+    throw new Error("fn is not a function");
+  } 
+
+  let currentLength = 0;
+    for(let i = 0; i < array.length; i++){
+        if(fn(array[i]) == true){
+            currentLength++;
+        }
+    }
+
+    if(currentLength !== 0){
+        return true
+    } else{
+        return false
+    } 
+} 
+
+function fn(element){
+    if(element < 1){
+        return true
+    } else {
+        return false
+    }
+}
+
+let array = [1, 2, 3, 4, 5];
+
+try{
+  console.log(isSomeTrue(array, fn));
+} catch(e){
+  console.log(e.message);
 }
 
 /*
@@ -50,6 +119,33 @@ function isSomeTrue(array, fn) {
    - fn не является функцией (с текстом "fn is not a function")
  */
 function returnBadArguments(fn) {
+  let newArray = []
+  if(Object.prototype.toString.call(fn) !== '[object Function]'){
+      throw new Error("fn is not a function");
+  }
+  for(let i = 1; i<arguments.length; i++){
+
+      try{
+          fn(arguments[i])
+      } catch(e){
+          newArray.push(arguments[i]);
+          console.log(e.message);
+      }
+     
+  }
+
+  return newArray
+}
+
+function fn(element){
+  if(element < 3){
+      throw new Error('Проходит проверку !')
+  }
+}
+try{
+  console.log(returnBadArguments(fn, 6, 5, 3, 0))
+}catch(e){
+  console.log(e.message);
 }
 
 /*
@@ -69,7 +165,51 @@ function returnBadArguments(fn) {
    - number не является числом (с текстом "number is not a number")
    - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
-function calculator() {
+function calculator(number = 0) {
+  if(Object.prototype.toString.call(number) !== '[object Number]'){
+      throw new Error('number is not a number')
+  }
+  let obj = {
+    sum: function(...rest){
+      for(let i=0; i < rest.length; i++){
+        number = number + rest[i]
+      }
+      return number
+    },
+
+    dif(...rest){
+      for(let i=0; i < rest.length; i++){
+          number = number - rest[i]
+      }
+      return number
+    },
+
+    div(...rest){
+      for(let i=0; i < rest.length; i++){
+          if(number == 0 || rest[i] == 0){
+              throw new Error('division by 0')
+          }
+          number = number / rest[i];
+      }
+      return number
+    },
+  
+    mul(...rest){
+      for(let i=0; i < rest.length; i++){
+          number = number * rest[i];
+      }
+      return number
+    }
+  }
+  
+  return obj;
+      
+}
+
+try{
+  console.log(calculator(50).sum(5, 5, 2, 1))
+} catch(e){
+  console.log(e.message)
 }
 
 /* При решении задач, пострайтесь использовать отладчик */
