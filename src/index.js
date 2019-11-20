@@ -18,7 +18,7 @@
  */
 function isAllTrue(array, fn){
   
-  if(array.length == 0 || Object.prototype.toString.call(array) !== '[object Array]'){
+  if(array.length === 0 || Object.prototype.toString.call(array) !== '[object Array]'){
     throw new Error("empty array");
   } else if(Object.prototype.toString.call(fn) !== '[object Function]'){
     throw new Error("fn is not a function");
@@ -26,12 +26,12 @@ function isAllTrue(array, fn){
 
   let currentLength = 0;
     for(let i = 0; i < array.length; i++){
-        if(fn(array[i]) == true){
+        if(fn(array[i]) === true){
             currentLength++;
         }
     }
 
-    if(array.length == currentLength){
+    if(array.length === currentLength){
         return true
     } else{
         return false
@@ -71,7 +71,7 @@ try{
    isSomeTrue([1, 2, 3, 4, 5], n => n > 20) // вернет false
  */
 function isSomeTrue(array, fn){
-  if(array.length == 0 || Object.prototype.toString.call(array) !== '[object Array]'){
+  if(array.length === 0 || Object.prototype.toString.call(array) !== '[object Array]'){
     throw new Error("empty array");
   } else if(Object.prototype.toString.call(fn) !== '[object Function]'){
     throw new Error("fn is not a function");
@@ -79,7 +79,7 @@ function isSomeTrue(array, fn){
 
   let currentLength = 0;
     for(let i = 0; i < array.length; i++){
-        if(fn(array[i]) == true){
+        if(fn(array[i]) === true){
             currentLength++;
         }
     }
@@ -171,34 +171,37 @@ function calculator(number = 0) {
   }
   let obj = {
     sum: function(...rest){
-      for(let i=0; i < rest.length; i++){
-        number = number + rest[i]
-      }
-      return number
+      let result = rest.reduce(function(sum, current) {
+        return sum + current
+      }, number);
+      return result
     },
 
     dif(...rest){
-      for(let i=0; i < rest.length; i++){
-          number = number - rest[i]
-      }
-      return number
+      let result = rest.reduce(function(sum, current) {
+        return sum - current
+      }, number);
+      return result
     },
 
     div(...rest){
-      for(let i=0; i < rest.length; i++){
-          if(number == 0 || rest[i] == 0){
-              throw new Error('division by 0')
-          }
-          number = number / rest[i];
+      for(let i = 0; i < rest.length; i++){
+        if(rest[i] === 0){
+          throw new Error('division by 0')
+        }
       }
-      return number
+      
+      let result = rest.reduce(function(sum, current) {
+        return sum / current
+      }, number);
+      return result
     },
   
     mul(...rest){
-      for(let i=0; i < rest.length; i++){
-          number = number * rest[i];
-      }
-      return number
+      let result = rest.reduce(function(sum, current) {
+        return sum * current
+      }, number);
+      return result
     }
   }
   
@@ -207,7 +210,7 @@ function calculator(number = 0) {
 }
 
 try{
-  console.log(calculator(50).sum(5, 5, 2, 1))
+  console.log(calculator(50).mul(5, 5, 2, 1))
 } catch(e){
   console.log(e.message)
 }
