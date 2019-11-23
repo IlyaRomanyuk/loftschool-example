@@ -6,7 +6,7 @@
  Напишите аналог встроенного метода forEach для работы с массивами
  Посмотрите как работает forEach и повторите это поведение для массива, который будет передан в параметре array
  */
-function forEach(array, fn) {
+/*function forEach(array, fn) {
   for(let i = 0; i < array.length; i++){
       fn(array[i], i, array);
   }
@@ -22,7 +22,7 @@ function fn(item, index){
   }
 }
 
-forEach(array, fn);
+forEach(array, fn);*/
 
 /*
  Задание 2:
@@ -30,7 +30,7 @@ forEach(array, fn);
  Напишите аналог встроенного метода map для работы с массивами
  Посмотрите как работает map и повторите это поведение для массива, который будет передан в параметре array
  */
-function map(array, fn) {
+/*function map(array, fn) {
   let newArray = [];
   for(let i = 0; i<array.length; i++){
       newArray[i] = array[i];
@@ -45,7 +45,7 @@ let result = item * item;
 return result;
 }
 
-console.log(map(array, fn));
+console.log(map(array, fn));*/
 /*
  Задание 3:
 
@@ -53,7 +53,7 @@ console.log(map(array, fn));
  Посмотрите как работает reduce и повторите это поведение для массива, который будет передан в параметре array
  */
 
- function reduce(array, fn, initial) {
+ /*function reduce(array, fn, initial) {
 
   for(let i=0; i<array.length; i++){
 
@@ -75,7 +75,7 @@ function fn(result, element, index, arr){
   console.log(index);
   return sum;
 }
-console.log(reduce(array, fn))
+console.log(reduce(array, fn))*/
 
 /*
  Задание 4:
@@ -85,14 +85,14 @@ console.log(reduce(array, fn))
  Пример:
    upperProps({ name: 'Сергей', lastName: 'Петров' }) вернет ['NAME', 'LASTNAME']
  */
-function upperProps(obj) {
+/*function upperProps(obj) {
   let array = [];
   for(let key in obj){
       array.push(key.toUpperCase());
   }
   return array;
 }
-console.log(upperProps({ name: 'Сергей', lastName: 'Петров' }))
+console.log(upperProps({ name: 'Сергей', lastName: 'Петров' }))*/
 
 /*
  Задание 5 *:
@@ -107,19 +107,31 @@ function slice(array, from, to){
       lastIndex = array.length;
   }
   let newArr = [];
-  if((Math.abs(startIndex) > array.length - 1) || (Math.abs(lastIndex) > array.length) || lastIndex === 0){
+
+  if(startIndex < 0){
+      startIndex = 0;
+  } else if(startIndex > array.length - 1){
+      console.log('m')
+      return newArrs;
+  }
+
+  if(lastIndex > array.length){
+      lastIndex = array.length;
+  } else if(lastIndex <= 0){
       console.log('t')
       return newArr;
   }
+
   for(let i = startIndex; i < lastIndex; i++){
       newArr = [...newArr, array[i]]
   }
+
   console.log(lastIndex);
   return newArr;
 }
 
 let array = [1, 2, 3, 4, 5, 6, 7];
-console.log(slice(array, -99999, -4));
+console.log(slice(array, -9999, -4));
 
 /*
  Задание 6 *:
@@ -128,7 +140,7 @@ console.log(slice(array, -99999, -4));
  Proxy должен перехватывать все попытки записи значений свойств и возводить это значение в квадрат
  */
 
-function createProxy(obj) {
+/*function createProxy(obj) {
   let proxy = new Proxy(obj, {
     set(target, prop, val){
       if (typeof val === 'number') {
@@ -144,7 +156,7 @@ let obj = {}
 
 obj = createProxy(obj);
 obj.a = 2;
-console.log(obj);
+console.log(obj);*/
 
 export {
     forEach,
