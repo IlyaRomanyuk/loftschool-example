@@ -1,173 +1,172 @@
-/* ДЗ 2 - работа с массивами и объектами */
+/* ДЗ 4 - работа с DOM */
 
 /*
  Задание 1:
 
- Напишите аналог встроенного метода forEach для работы с массивами
- Посмотрите как работает forEach и повторите это поведение для массива, который будет передан в параметре array
+ 1.1: Функция должна создать элемент с тегом DIV
+
+ 1.2: В созданный элемент необходимо поместить текст, переданный в параметр text
+
+ Пример:
+   createDivWithText('loftschool') // создаст элемент div, поместит в него 'loftschool' и вернет созданный элемент
  */
-/*function forEach(array, fn) {
-  for(let i = 0; i < array.length; i++){
-      fn(array[i], i, array);
-  }
+function createDivWithText(text) {
 }
-
-let array = [77, 56, 23, 44];
-let result = 0;
-function fn(item, index){
-  result = result + item;
-  console.log(`Index: ${index} Number: ${item}`);
-  if(index === array.length - 1){
-      console.log(result);
-  }
-}
-
-forEach(array, fn);*/
 
 /*
  Задание 2:
 
- Напишите аналог встроенного метода map для работы с массивами
- Посмотрите как работает map и повторите это поведение для массива, который будет передан в параметре array
+ Функция должна вставлять элемент, переданный в параметре what в начало элемента, переданного в параметре where
+
+ Пример:
+   prepend(document.querySelector('#one'), document.querySelector('#two')) // добавит элемент переданный первым аргументом в начало элемента переданного вторым аргументом
  */
-/*function map(array, fn) {
-  let newArray = [];
-  for(let i = 0; i<array.length; i++){
-      newArray[i] = array[i];
-      newArray[i] = fn(array[i], i, array)
-  }
-  return newArray;
+function prepend(what, where) {
 }
 
-let array = [1, 2, 3, 4]
-function fn(item, index, array){
-let result = item * item;
-return result;
-}
-
-console.log(map(array, fn));*/
 /*
  Задание 3:
 
- Напишите аналог встроенного метода reduce для работы с массивами
- Посмотрите как работает reduce и повторите это поведение для массива, который будет передан в параметре array
+ 3.1: Функция должна перебрать все дочерние элементы узла, переданного в параметре where
+
+ 3.2: Функция должна вернуть массив, состоящий из тех дочерних элементов, следующим соседом которых является элемент с тегом P
+
+ Пример:
+   Представим, что есть разметка:
+   <body>
+      <div></div>
+      <p></p>
+      <a></a>
+      <span></span>
+      <p></p>
+   </dody>
+
+   findAllPSiblings(document.body) // функция должна вернуть массив с элементами div и span т.к. следующим соседом этих элементов является элемент с тегом P
  */
-
- /*function reduce(array, fn, initial) {
-
-  for(let i=0; i<array.length; i++){
-
-    if(initial === undefined && i === 0){
-      initial = array[i];
-      continue;
-    }
-    
-    initial = fn(initial, array[i], i, array);
-  }
-  return initial;
+function findAllPSiblings(where) {
 }
-
-let array = [1, 2, 3, 4];
-
-function fn(result, element, index, arr){
-  console.log(result);
-  let sum = result + element;
-  console.log(index);
-  return sum;
-}
-console.log(reduce(array, fn))*/
 
 /*
  Задание 4:
 
- Функция должна перебрать все свойства объекта, преобразовать их имена в верхний регистр и вернуть в виде массива
+ Функция представленная ниже, перебирает все дочерние узлы типа "элемент" внутри узла переданного в параметре where и возвращает массив из текстового содержимого найденных элементов.
+ Но похоже, что в код функции закралась ошибка и она работает не так, как описано.
+
+ Необходимо найти и исправить ошибку в коде так, чтобы функция работала так, как описано выше.
 
  Пример:
-   upperProps({ name: 'Сергей', lastName: 'Петров' }) вернет ['NAME', 'LASTNAME']
+   Представим, что есть разметка:
+   <body>
+      <div>привет</div>
+      <div>loftschool</div>
+   </dody>
+
+   findError(document.body) // функция должна вернуть массив с элементами 'привет' и 'loftschool'
  */
-/*function upperProps(obj) {
-  let array = [];
-  for(let key in obj){
-      array.push(key.toUpperCase());
-  }
-  return array;
+function findError(where) {
+    var result = [];
+
+    for (var child of where.childNodes) {
+        result.push(child.innerText);
+    }
+
+    return result;
 }
-console.log(upperProps({ name: 'Сергей', lastName: 'Петров' }))*/
 
 /*
- Задание 5 *:
+ Задание 5:
 
- Напишите аналог встроенного метода slice для работы с массивами
- Посмотрите как работает slice и повторите это поведение для массива, который будет передан в параметре array
+ Функция должна перебрать все дочерние узлы элемента переданного в параметре where и удалить из него все текстовые узлы
+
+ Задачу необходимо решить без использования рекурсии, то есть можно не уходить вглубь дерева.
+ Так же будьте внимательны при удалении узлов, т.к. можно получить неожиданное поведение при переборе узлов
+
+ Пример:
+   После выполнения функции, дерево <div></div>привет<p></p>loftchool!!!
+   должно быть преобразовано в <div></div><p></p>
  */
-function slice(array, from, to){
-  let newArr = [];
-  
-  let startIndex = from < 0 ? array.length + from : from;
-  let lastIndex = to < 0 ? array.length + to : to;
-
-  if((from === undefined) && (to === undefined)){
-      startIndex = 0;
-      lastIndex =  array.length;
-  }
-  
-  if(to === undefined){
-      lastIndex = array.length;
-  }
-  
-  if(startIndex < 0){
-      startIndex = 0;
-  } else if(startIndex > array.length - 1){
-      console.log('m')
-      return newArr;
-  }
-
-  if(lastIndex > array.length){
-      lastIndex = array.length;
-  } else if(lastIndex <= 0){
-      console.log('t')
-      return newArr;
-  }
-
-  for(let i = startIndex; i < lastIndex; i++){
-      newArr = [...newArr, array[i]]
-  }
-  return newArr;
+function deleteTextNodes(where) {
 }
-
-let array = [1, 2, 3, 4, 5, 6, 7];
-console.log(slice(array))
 
 /*
- Задание 6 *:
+ Задание 6:
 
- Функция принимает объект и должна вернуть Proxy для этого объекта
- Proxy должен перехватывать все попытки записи значений свойств и возводить это значение в квадрат
+ Выполнить предудыщее задание с использование рекурсии - то есть необходимо заходить внутрь каждого дочернего элемента (углубляться в дерево)
+
+ Так же будьте внимательны при удалении узлов, т.к. можно получить неожиданное поведение при переборе узлов
+
+ Пример:
+   После выполнения функции, дерево <span> <div> <b>привет</b> </div> <p>loftchool</p> !!!</span>
+   должно быть преобразовано в <span><div><b></b></div><p></p></span>
  */
-
-/*function createProxy(obj) {
-  let proxy = new Proxy(obj, {
-    set(target, prop, val){
-      if (typeof val === 'number') {
-        target[prop] = val * val;
-    }
-    return true;
-    }
-  });
-  return proxy
+function deleteTextNodesRecursive(where) {
 }
 
-let obj = {}
+/*
+ Задание 7 *:
 
-obj = createProxy(obj);
-obj.a = 2;
-console.log(obj);*/
+ Необходимо собрать статистику по всем узлам внутри элемента переданного в параметре root и вернуть ее в виде объекта
+ Статистика должна содержать:
+ - количество текстовых узлов
+ - количество элементов каждого класса
+ - количество элементов каждого тега
+ Для работы с классами рекомендуется использовать classList
+ Постарайтесь не создавать глобальных переменных
+
+ Пример:
+   Для дерева <div class="some-class-1"><b>привет!</b> <b class="some-class-1 some-class-2">loftschool</b></div>
+   должен быть возвращен такой объект:
+   {
+     tags: { DIV: 1, B: 2},
+     classes: { "some-class-1": 2, "some-class-2": 1 },
+     texts: 3
+   }
+ */
+function collectDOMStat(root) {
+}
+
+/*
+ Задание 8 *:
+
+ 8.1: Функция должна отслеживать добавление и удаление элементов внутри элемента переданного в параметре where
+ Как только в where добавляются или удаляются элементы,
+ необходимо сообщать об этом при помощи вызова функции переданной в параметре fn
+
+ 8.2: При вызове fn необходимо передавать ей в качестве аргумента объект с двумя свойствами:
+   - type: типа события (insert или remove)
+   - nodes: массив из удаленных или добавленных элементов (в зависимости от события)
+
+ 8.3: Отслеживание должно работать вне зависимости от глубины создаваемых/удаляемых элементов
+
+ Рекомендуется использовать MutationObserver
+
+ Пример:
+   Если в where или в одного из его детей добавляется элемент div
+   то fn должна быть вызвана с аргументом:
+   {
+     type: 'insert',
+     nodes: [div]
+   }
+
+   ------
+
+   Если из where или из одного из его детей удаляется элемент div
+   то fn должна быть вызвана с аргументом:
+   {
+     type: 'remove',
+     nodes: [div]
+   }
+ */
+function observeChildNodes(where, fn) {
+}
 
 export {
-    forEach,
-    map,
-    reduce,
-    upperProps,
-    slice,
-    createProxy
+    createDivWithText,
+    prepend,
+    findAllPSiblings,
+    findError,
+    deleteTextNodes,
+    deleteTextNodesRecursive,
+    collectDOMStat,
+    observeChildNodes
 };
