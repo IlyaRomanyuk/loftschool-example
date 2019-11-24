@@ -101,18 +101,25 @@ console.log(upperProps({ name: 'Сергей', lastName: 'Петров' }))*/
  Посмотрите как работает slice и повторите это поведение для массива, который будет передан в параметре array
  */
 function slice(array, from, to){
+  let newArr = [];
+  
   let startIndex = from < 0 ? array.length + from : from;
   let lastIndex = to < 0 ? array.length + to : to;
+
+  if((from === undefined) && (to === undefined)){
+      startIndex = 0;
+      lastIndex =  array.length;
+  }
+  
   if(to === undefined){
       lastIndex = array.length;
   }
-  let newArr = [];
-
+  
   if(startIndex < 0){
       startIndex = 0;
   } else if(startIndex > array.length - 1){
       console.log('m')
-      return newArrs;
+      return newArr;
   }
 
   if(lastIndex > array.length){
@@ -125,13 +132,11 @@ function slice(array, from, to){
   for(let i = startIndex; i < lastIndex; i++){
       newArr = [...newArr, array[i]]
   }
-
-  console.log(lastIndex);
   return newArr;
 }
 
 let array = [1, 2, 3, 4, 5, 6, 7];
-console.log(slice(array, -9999, -4));
+console.log(slice(array))
 
 /*
  Задание 6 *:

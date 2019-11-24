@@ -171,75 +171,97 @@ describe('ДЗ 3 - объекты и массивы', () => {
     });
 
     describe('slice', () => {
-        it('общая проверка работоспособности', () => {
-            let array = [1, 2, 3, 4, 5, 6, 7];
+        let array = [1, 2, 3, 4, 5, 6, 7];
+        it('общая проверка работоспособности 0', () => {
+            
             let target = nativeSlice.call(array);
             let result = slice(array);
 
             assert.deepEqual(result, target);
+        })
+        it('общая проверка работоспособности 1', () => {
 
-            target = nativeSlice.call(array, 0);
-            result = slice(array, 0);
+            let target = nativeSlice.call(array, 0);
+            let result = slice(array, 0);
             assert.deepEqual(result, target);
+        });
 
-            target = nativeSlice.call(array, 0, 0);
-            result = slice(array, 0, 0);
+        it('общая проверка работоспособности 2', () => {
+            let target = nativeSlice.call(array, 0, 0);
+            let result = slice(array, 0, 0);
             assert.deepEqual(result, target);
+        });
 
-            target = nativeSlice.call(array, 0, 1);
-            result = slice(array, 0, 1);
+        it('общая проверка работоспособности 3', () => {
+            let target = nativeSlice.call(array, 0, 1);
+            let result = slice(array, 0, 1);
             assert.deepEqual(result, target);
+        });
 
-            target = nativeSlice.call(array, 0, 2);
-            result = slice(array, 0, 2);
+        it('общая проверка работоспособности 4', () => {
+            let target = nativeSlice.call(array, 0, 2);
+            let result = slice(array, 0, 2);
             assert.deepEqual(result, target);
+        });
 
-            target = nativeSlice.call(array, 0, 5);
-            result = slice(array, 0, 5);
+        it('общая проверка работоспособности 5', () => {
+            let target = nativeSlice.call(array, 0, 5);
+            let result = slice(array, 0, 5);
             assert.deepEqual(result, target);
-
-            target = nativeSlice.call(array, 0, -1);
-            result = slice(array, 0, -1);
+        });
+        it('общая проверка работоспособности 6', () => {
+            let target = nativeSlice.call(array, 0, -1);
+            let result = slice(array, 0, -1);
             assert.deepEqual(result, target);
-
-            target = nativeSlice.call(array, 0, -3);
-            result = slice(array, 0, -3);
+        });
+        it('общая проверка работоспособности 7', () => {
+            let target = nativeSlice.call(array, 0, -3);
+            let result = slice(array, 0, -3);
             assert.deepEqual(result, target);
-
-            target = nativeSlice.call(array, 0, -10000);
-            result = slice(array, 0, -10000);
+        });
+        it('общая проверка работоспособности 8', () => {
+            let target = nativeSlice.call(array, 0, -10000);
+            let result = slice(array, 0, -10000);
             assert.deepEqual(result, target);
-
-            target = nativeSlice.call(array, 3);
-            result = slice(array, 3);
+        });
+        it('общая проверка работоспособности 9', () => {
+            let target = nativeSlice.call(array, 3);
+            let result = slice(array, 3);
             assert.deepEqual(result, target);
-
-            target = nativeSlice.call(array, 3, -100);
-            result = slice(array, 3, -100);
+        });
+        it('общая проверка работоспособности 10', () => {
+            let target = nativeSlice.call(array, 3, -100);
+            let result = slice(array, 3, -100);
             assert.deepEqual(result, target);
-
-            target = nativeSlice.call(array, 3, 100);
-            result = slice(array, 3, 100);
+        });
+        it('общая проверка работоспособности 11', () => {
+            let target = nativeSlice.call(array, 3, 100);
+            let result = slice(array, 3, 100);
             assert.deepEqual(result, target);
-
-            target = nativeSlice.call(array, 3, 5);
-            result = slice(array, 3, 5);
+        });
+        it('общая проверка работоспособности 12', () => {
+            let target = nativeSlice.call(array, 3, 5);
+            let result = slice(array, 3, 5);
             assert.deepEqual(result, target);
-
-            target = nativeSlice.call(array, 9999);
-            result = slice(array, 9999);
+        });
+        it('общая проверка работоспособности 13', () => {
+            let target = nativeSlice.call(array, 9999);
+            let result = slice(array, 9999);
             assert.deepEqual(result, target);
-
-            target = nativeSlice.call(array, -9999);
-            result = slice(array, -9999);
+        });
+        it('общая проверка работоспособности 14', () => {
+            let target = nativeSlice.call(array, -9999);
+            let result = slice(array, -9999);
             assert.deepEqual(result, target);
-
-            target = nativeSlice.call(array, -9999, 4);
-            result = slice(array, -9999, 4);
+        });
+        it('общая проверка работоспособности 15', () => {
+            let target = nativeSlice.call(array, -9999, 4);
+            let result = slice(array, -9999, 4);
             assert.deepEqual(result, target);
-
-            target = nativeSlice.call(array, -9999, -4);
-            result = slice(array, -9999, -4);
+        });
+        it('общая проверка работоспособности 16', () => {
+            let target = nativeSlice.call(array, -9999, -4);
+            let result = slice(array, -9999, -4);
             assert.deepEqual(result, target);
         });
     });
