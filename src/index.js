@@ -28,7 +28,7 @@ createDivWithText('loftschool');
 function prepend(what, where) {
   where.prepend(what);
 }
-prepend(document.querySelector('#one'), document.querySelector('#two'));
+
 
 /*
  Задание 3:
@@ -101,12 +101,20 @@ console.log(findError(document.querySelector('body')));
    должно быть преобразовано в <div></div><p></p>
  */
 function deleteTextNodes(where) {
+
+  for (let child of where.childNodes) {
+      if(child.nodeType === 3){
+        where.removeChild(child);
+      }   
+  }
 }
+
+deleteTextNodes(document.querySelector('body'));
 
 /*
  Задание 6:
 
- Выполнить предудыщее задание с использование рекурсии - то есть необходимо заходить внутрь каждого дочернего элемента (углубляться в дерево)
+ Выполнить предудыщее задание с использованием рекурсии - то есть необходимо заходить внутрь каждого дочернего элемента (углубляться в дерево)
 
  Так же будьте внимательны при удалении узлов, т.к. можно получить неожиданное поведение при переборе узлов
 
@@ -115,7 +123,17 @@ function deleteTextNodes(where) {
    должно быть преобразовано в <span><div><b></b></div><p></p></span>
  */
 function deleteTextNodesRecursive(where) {
+  
+    for (var child of where.childNodes) {
+      if(child.nodeType === 3){
+        child.parentNode.removeChild(child);
+      }
+    }
+  [...where.childNodes].forEach(element => {
+    deleteTextNodesRecursive(element);
+  })
 }
+deleteTextNodesRecursive(document.querySelector('body'));
 
 /*
  Задание 7 *:
