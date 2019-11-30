@@ -129,9 +129,10 @@ function deleteTextNodesRecursive(where) {
         child.parentNode.removeChild(child);
       }
     }
-  [...where.childNodes].forEach(element => {
-    deleteTextNodesRecursive(element);
-  })
+    
+    [...where.childNodes].forEach(element => {
+      deleteTextNodesRecursive(element);
+    })
 }
 deleteTextNodesRecursive(document.querySelector('body'));
 
@@ -155,8 +156,67 @@ deleteTextNodesRecursive(document.querySelector('body'));
      texts: 3
    }
  */
-function collectDOMStat(root) {
+const countElements = () => {
+  let count = {};
+  return (tagName) => {
+  count[tagName] = count[tagName]
+    ? count[tagName] += 1
+    : count[tagName] = 1;
+  return count;
 }
+}
+
+const countClass = () => {
+let count = {};
+let array = [];
+return (className) => {
+if(className === null){
+  return count;
+}
+array = className.split(' ');
+if(array.length > 1){
+  array.forEach(element => {
+    count[element] = count[element] ? count[element] += 1 : count[element] = 1;
+    return count;
+  })
+}else{
+  count[className] = count[className]
+  ? count[className] += 1
+  : count[className] = 1;
+  return count;
+}
+
+}
+}
+
+const count = countElements();
+const count2 = countClass();
+let text = 0;
+let stats = {};
+
+
+function collectDOMStat(root) {
+  [...root.childNodes].forEach(element => {
+    if(element.nodeType === 3){
+      text++;
+      stats.text = text;
+    }
+  })
+
+  const childElements = [...root.children];
+  if (childElements.length > 0) {
+      childElements.forEach(elem => {
+      stats.name = count(elem.tagName);
+      stats.class = count2(elem.getAttribute("class"))
+      if (elem.childNodes) {
+          collectDOMStat(elem);
+      }
+    })
+  }  
+  return stats;
+}
+
+console.log(collectDOMStat(document.body))
 
 /*
  Задание 8 *:
