@@ -63,14 +63,7 @@ function loadTowns(url) {
    isMatching('Moscow', 'SCO') // true
    isMatching('Moscow', 'Moscov') // false
  */
-function isMatching(full = '', chunk) {
-  if(full.toLowerCase().indexOf(chunk.toLowerCase()) !== -1){
-    return true
-  } else{
-    return false
-  }
-     
-}
+const isMatching =(full, chunk) => full.toLowerCase().indexOf(chunk.toLowerCase()) !== -1
 
 /* Блок с надписью "Загрузка" */
 const loadingBlock = homeworkContainer.querySelector('#loading-block');
@@ -103,12 +96,45 @@ filterInput.addEventListener('keyup', function() {
           div.textContent = element;
           filterResult.append(div);
 
-          if(filterInput.value.length == 0){
+          if(filterInput.value.length === 0){
             [...filterResult.children].forEach(el => {
               el.parentNode.removeChild(el)
             })
           }
         }
+      })
+    })
+    .catch(() => {
+      let btn = document.querySelector('.btn');
+      btn.style.display = "block";
+      btn.addEventListener('click', (e) => {
+      loadTowns('https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json')
+      .then((response) => {
+        loadingBlock.style.display = 'none';
+        for(const town of response){
+          arr.push(town.name);
+        }
+        newArr = arr.sort();
+        
+          [...filterResult.children].forEach(el => {
+            el.parentNode.removeChild(el)
+          })
+          
+        newArr.forEach(element => {
+          if(isMatching(element, filterInput.value)){
+            const div = document.createElement("DIV");
+            div.textContent = element;
+            filterResult.append(div);
+  
+            if(filterInput.value.length === 0){
+              [...filterResult.children].forEach(el => {
+                el.parentNode.removeChild(el)
+              })
+            }
+            
+          }
+        })
+      })
       })
     })
 });

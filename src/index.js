@@ -47,13 +47,7 @@ function loadAndSortTowns(url) {
         reject()
       }else{
         const towns = JSON.parse(xhr.responseText);
-        let arr = [];
-        let newArr = [];
-        for(let name of towns){
-            arr.push(name.name);
-          }
-        newArr = arr.sort();
-        resolve(newArr);
+        resolve(towns.map(({ name }) => name).sort());
       }
     }) 
   })
