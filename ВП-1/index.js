@@ -16,9 +16,10 @@ function init(){
     })
     
     let array = [];
+    let arr = [];
 
     function getBalloon(coords, location) {
-        let arr = [
+        arr = [
             '<div class="reviews">',
             '<div class="reviews__header">',
             '<div class="place">',
@@ -44,7 +45,7 @@ function init(){
             minWidth: 354,
             minHeight: 550,
             autoPanDuration: 100
-        }).then(() => {        
+        }).then(() => {  
             let closeButton = document.querySelector('.close__button');
             closeButton.addEventListener('click', () => map.balloon.close());
             document.querySelector('.form__btn').addEventListener('click', (e) => {
@@ -54,6 +55,7 @@ function init(){
             })  
         })
     }
+
 
     function addReview(coords) {
         let form = document.querySelector('.form');
@@ -83,16 +85,13 @@ function init(){
     function renderReview(object) {
         let element = document.createElement('div');
         element.classList.add('comment');
-
         let template = Handlebars.compile(document.querySelector('#entry-template').textContent);
         element.innerHTML = template(object)
-
         document.querySelector('.reviews__content').append(element);
     }
 
     
     function createPlaysMark(coords, arr, location) {
-
         let el;
         if(localStorage[makeFixedCords(coords)]){
             for(let key of JSON.parse(localStorage[makeFixedCords(coords)])){
@@ -101,6 +100,7 @@ function init(){
         }
 
         let mark = new ymaps.Placemark(coords, {
+            balloonContentCoords: coords,
             balloonContentHeader1: el.place,
             balloonContentBody1: location,
             balloonContentBody2: el.about,
@@ -111,11 +111,8 @@ function init(){
             iconImageSize: [44, 66],
             iconImageOffset: [-22, -66]
         });
-        
 
-
-        clusterer.add(mark);
-        
+        clusterer.add(mark);  
 
         mark.events.add('click', (e) => {
             map.balloon.open(coords, arr.join(""), {
@@ -151,12 +148,63 @@ function init(){
     }
 
     var customItemContentLayout = ymaps.templateLayoutFactory.createClass(
+
         '<div>{{properties.balloonContentHeader1}}</div>'+
-        `<a href="#">{{properties.balloonContentBody1}}</a>`+
+        `<a class="balloonAddress" href="#">{{properties.balloonContentBody1}}</a>`+
         '<div>{{properties.balloonContentBody2}}</div>'+
-        '<div>{{properties.balloonContentFooter1}}</div>'
+        '<div>{{properties.balloonContentFooter1}}</div>', {
+
+            build: function(){
+                console.log(this)
+
+                customItemContentLayout.superclass.build.call(this);
+
+                this.balloonContentBody1 = document.querySelector('.balloonAddress');
+                this.balloonContentBody1Listener = this.balloonContentBody1Listener.bind(this);
+
+                this.balloonContentBody1.addEventListener('click', this.balloonContentBody1Listener);
+                
+            },
+            balloonContentBody1Listener: function(e) {
+                e.preventDefault();
+                let coords = this.events.params.context._data.properties.get('balloonContentCoords');
+                let address = this.events.params.context._data.properties.get('balloonContentBody1');
+                
+                map.balloon.open(coords, arr.join(""), {
+                    closeButton: false,
+                    minWidth: 354,
+                    minHeight: 550,
+                    autoPanDuration: 100,
+                    offset: [70, 570]
+                }).then(() => {
+                    document.querySelector('.close__button').addEventListener('click', () => {
+                        map.balloon.close();
+                    })
+
+                    let el;
+                    if(localStorage[makeFixedCords(coords)]){
+                        for(let key of JSON.parse(localStorage[makeFixedCords(coords)])){
+                            el = JSON.parse(key);
+                            renderReview(el);
+                        }
+                    }
+
+                    document.querySelector('.form__btn').addEventListener('click', (e) => {
+                        e.preventDefault();
+                        addReview(coords);
+                        createPlaysMark(coords, arr, address);
+                    })
+                    
+                })
+                /*getBalloon(coords, address);
+                const BalloonContentLayout = getBalloon(coords, address)
+                map.balloon.open(coords, null, {
+                  layout:  BalloonContentLayout
+                });*/
+                
+            }
         
-    ); 
+        }); 
 
     let clusterer = new ymaps.Clusterer({
         clusterDisableClickZoom: true,
