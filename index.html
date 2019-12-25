@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="dest/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io.connect('http://localhost:8080');
+
+        socket.on('news', function(data){
+        
+    })
+    </script>
+</head>
+<body>
+    <div class="authorization hide">
+        <div class="header">
+            <img class="close" src="img/close.png" alt="">
+            <img src="img/icon.png" alt="" class="header__icon">
+            <div class="header__title">Авторизация</div>
+            <div class="header__content">Введите пожалуйста своё фио и ник для дальнейшей авторизации</div>
+        </div>
+
+        <form action="" class="form">
+            <input  class="input" type="text" name="name" placeholder="Введите свое ФИО">
+            <input  class="input" type="text" name="nik" placeholder="Введите свой ник">
+            <button class="form__btn">Войти</button> 
+        </form>
+    </div>
+
+    <div class="load hide">
+        <img class="close" src="img/close.png" alt="">
+        <div class="load__header">Загрузка фото</div>
+        <div class="load__content">
+            <img src="img/photo.png" class="load__photo" alt="">
+            <div class="load__about">
+                <p class="load__name">Алексей Трубин</p>
+                <span>В сети</span>
+            </div>       
+        </div>
+    </div>
+
+    <div class="chat hide">
+
+        <div class="chat__panel panel">
+            <div class="panel__buttons">
+                <img class="line" src="img/line.png" alt="">
+                <img class="rect" src="img/rect.png" alt="">
+                <img class="hide__btn" src="img/hide.png" alt="">
+            </div>
+        </div>
+
+        <div class="chat__content">
+
+            <div class="chat__menu menu">
+                <div class="menu__search">
+                    <img class="menu__icon" src="img/menu.png" alt="">
+                    <input name="search" type="text" placeholder="Найти...">
+                </div>
+                <div class="menu__list list">
+                    <div class="list__link">
+                        <div class="list__img">
+                            <img src="img/alexander.png" alt="">
+                        </div>
+                        <div class="list__about">
+                            <div class="list__name">Алкусандр Шувалов</div>
+                            <div class="list__sms">Рад был пообщаться</div>
+                        </div>
+                    </div>
+
+                    <div class="list__link">
+                        <div class="list__img">
+                            <img src="img/anton.png" alt="">
+                        </div>
+                        <div class="list__about">
+                            <div class="list__name">Антон Ивченко</div>
+                            <div class="list__sms">Привет!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat__message message">
+
+                <div class="message__header title">
+                    <div class="title__dialog">Чат</div>
+                    <span class="title__people">2 участника</span>
+                </div>
+
+                <div class="message__content content">
+                    <div class="content__part left">
+                        <img width="33" height="33" class="content__img" src="img/alexander.png" alt="">
+                        <div class="content__sms sms">
+                            <p class="sms__dio">Привет!<span>17:55</span></p>
+                            <p class="sms__dio">Как дела?<span>17:56</span></p>
+                        </div>
+                    </div>
+
+                    <div class="content__part right">
+                        <div class="content__sms sms">
+                            <p class="sms__dio">Всё хорошо!<span>17:55</span></p>
+                            <p class="sms__dio">У тебя как?<span>17:56</span></p>
+                        </div>
+                        <img width="33" height="33" class="content__img" src="img/anton.png" alt="">
+                    </div>
+                </div>
+
+                <div class="message__footer footer">
+                    <p class="footer__item">Введите сообщения...</p>
+                    <button class="footer__btn">Отправить</button>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+
+   <div class="edit hide">
+        <div class="work">
+
+        </div>
+        <div class="edit__buttons">
+            <button class='cancel'>отмена</button>
+            <button class='save'>сохранить</button>
+        </div>
+    </div>
+</body>
+</html>
