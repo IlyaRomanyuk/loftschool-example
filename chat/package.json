@@ -12,6 +12,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node express.js"
   },
+  "nodemonConfig": {
+    "ignore": ["live"]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"

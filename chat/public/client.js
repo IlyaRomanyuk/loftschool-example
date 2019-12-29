@@ -23,18 +23,31 @@ socket.on('news', function(data){
 socket.on('onlinePeople', function(data) {
     let container = document.querySelector('.menu__list');
     container.innerHTML = "";
+    
     data.forEach(element => {
         let row = document.createElement('div')
         row.classList.add('list__link');
         row.textContent = `${element.name} ${element.lastName}`;
         container.append(row);
     })
-    
 })
+
+socket.on('disconectPeople', function(data) {
+    let container = document.querySelector('.menu__list');
+    let users = document.querySelectorAll('.list__link');
+
+    let needUser = [...users].find(el => el.textContent == `${data.name} ${data.lastName}`);
+    container.removeChild(needUser);
+})
+
+/*socket.on('renderMessages', function(data) {
+
+})*/
 
 socket.on('message', function(data) {
     let messBtn = document.querySelector('.footer__btn');
     messBtn.addEventListener('click', (e) => {
+        console.log('hjk');
         let message = document.querySelector('.footer__item').value;
         document.querySelector('.footer__item').value = "";
         /*if(data.socketID){
@@ -48,7 +61,6 @@ socket.on('message', function(data) {
 
 
 socket.on("loadMessage", function(data) {
-    console.log(data)
     let container = document.querySelector('.message__content');
     let div = document.createElement('div');
     div.classList.add('content__part');

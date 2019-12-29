@@ -7,11 +7,14 @@ var io = require('socket.io')(http);
 
 app.use(express.static('public'));
 
-const filePeople = "file.json";
+const filePeople = "live/file.json";
+const fileMessage = "live/messages.json";
 let clients = [];
+let newArr = [];
+
 
 io.on('connection', function(socket){
-	clients.push(socket);
+	clients.push(socket.id);
 	io.sockets.emit('checkPeople', checkPeople(clients))
 
 	socket.emit('news', {});
@@ -21,31 +24,58 @@ io.on('connection', function(socket){
 		const filterObj = newData.find(item => item.name === data.name && item.lastName === data.lastName);
 
 		if(filterObj){
-			socket.emit('hideAutoriz', filterObj)
+			socket.emit('hideAutoriz', filterObj);
+			clients.pop();
+			clients.push(filterObj.socketID[0]);
+
+			let messages = getDataFromFile(fileMessage);
+			for(let j = 0; j < messages.length; j++){
+
+				for(let i = 0; i < newData.length; i++){
+					if(messages[j].id == newData[i].socketID[0]){
+						messages[j].src = newData[i].src;
+						messages[j].name = newData[i].name;
+						messages[j].lastName = newData[i].lastName;
+					}
+				}
+				socket.emit('loadMessage', messages[j])
+			}
+		
 		} else {
 			data.socketID = [...(data.socketID || []), socket.id];
 			newData.push(data);
 			socket.emit('hideAutoriz', data);
-		}
 
+		}
+		newArr = [];
+		for(let j = 0; j < clients.length; j++){
+			for(let i = 0; i < newData.length; i++){
+				if(clients[j] == newData[i].socketID[0]){
+					newArr.push(newData[i]);
+				}
+			}
+		}
+		io.sockets.emit('onlinePeople', newArr)
 		writeStringToFile(newData, filePeople);
-		
-		io.sockets.emit('onlinePeople', newData);
 		socket.emit('message', newData);
 	})
 
 	socket.on('sendMessage', function(data) {
+		console.log('ghgj');
 		let newData = getDataFromFile(filePeople);
 		newData.forEach(element => {
 			if(element.socketID.indexOf(...data.id) != -1){
 				data.src = element.src;
-				let messages = getDataFromFile('messages.json');
-				messages[element.socketID] = [...(messages[element.socketID] || []), data.mes]
-				writeStringToFile(messages, 'messages.json')
+				let messages = getDataFromFile('live/messages.json');
+				messages.push({id: data.id[0], mes: data.mes})
+				writeStringToFile(messages, 'live/messages.json');
 			}
 		})
+		//io.sockets.emit('loadMessage', data);
+		console.log(socket.id, data.mes);
+		socket.emit('loadMessage', data);
+		socket.broadcast.emit('loadMessage', data);
 		writeStringToFile(newData, filePeople);
-		io.sockets.emit('loadMessage', data);
 	})
 
 	socket.on('photo', function(data) {
@@ -58,11 +88,16 @@ io.on('connection', function(socket){
 		writeStringToFile(newData, filePeople);
 		socket.emit('loadPhotoInChat', data.src);
 	})
-
+            
 	socket.on('disconnect', function(data) {
-		clients.splice(clients.indexOf(socket), 1);
-		io.sockets.emit('checkPeople', checkPeople(clients));
+		let element = clients.find(item => {
+			return (item == socket.id);
+		})
+		
+		io.sockets.emit('disconectPeople', getDataFromFile(filePeople).find(item => item.socketID[0] == element));
 
+		clients.splice(clients.indexOf(socket.id), 1);
+		io.sockets.emit('checkPeople', checkPeople(clients));
 	})
 });
 
